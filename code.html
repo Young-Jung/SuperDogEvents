@@ -17,6 +17,7 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="/css/site.css">
     <link rel="stylesheet" href="/css/superdog.css">
+    <link rel="stylesheet" href="/css/prismTomorrow.css">
 </head>
 
 <body>
@@ -61,32 +62,53 @@
             <div class="dogContainer">
                 <div class="row">
                     <div class="col">
-                        <h1 style="margin-top: 30px;">Super Dog Events: A Coding Challenge</h1>
-                        <strong>The Functions that make Super Dog Events Super.</strong>
-                        <br><br>
+                        <section>
 
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-7 col-md-7 col-lg">
+                            <h1 style="margin-top: 30px;">Super Dog Events: A Coding Challenge</h1>
+                            <strong>The Functions that make Super Dog Events Super.</strong>
+                            <br><br>
+                            <ul class="text-dark">
+                                <li>Build Dropdown</li>
+                                <li>getPayments</li>
+                                <li>displayData</li>
+                                <li>displayStats</li>
+                            </ul>
+                            <h6 class="card-text ml-1 mb-3">
+                                Click the section links below to learn more about the code.
+                            </h6>
+                        </section>
+                        <!-- Collapsible Sections -->
+                        <div class="accordion" id="accordionSuperDogEvents">
+                            <!-- Build Payment Schedule -->
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                            data-target="#collapseBuildDropDown" aria-expanded="true"
+                                            aria-controls="collapseBuildDropDown">
+                                            Build Dropdown
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseBuildDropDown" class="collapse show" aria-labelledby="headingOne"
+                                    data-parent="#accordionSuperDogEvents">
+                                    <div class="card-body">
+                                        <h5>Build Dropdown</h5>
+                                        <p class="mb-3">
+                                            This function is the entry point for the application.
+                                        </p>
+                                        <p>
+                                            <span class="badge badge-info">Lines 5</span>
+                                            Get Event Data.
+                                        </p>
+                                        <p>
+                                            <span class="badge badge-info">Line 8-17</span>
+                                            Display Dropdown
+                                        </p>
 
 
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-lg-10 col-md-10 line-numbers">
-                        <pre><code class="language-javascript">
-// the default display is all events
-var filteredEvents = eventsArray;
-
-// build a dropdown of specific cities
-function buildDropDown() {
-    displayDropDown();
-    displayStats();
-    displayData();
-}
-
+                                        <!-- Start Code -->
+                                        <pre class="line-numbers"><code class="language-javascript">
 function displayDropDown() {
     var eventDD = document.getElementById("eventDropDown");
     let curEvents = [];
@@ -104,21 +126,244 @@ function displayDropDown() {
     resultHTML += linkHTMLEnd;
     eventDD.innerHTML = resultHTML;
 }
+</code></pre>
+                                        <!-- End Code -->
 
-function getData() {
-    let curEvents = JSON.parse(localStorage.getItem("storageArray")) || [];
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                            data-target="#collapseGetPayments" aria-expanded="false"
+                                            aria-controls="collapseGetPayments">
+                                            Get Events
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseGetPayments" class="collapse" aria-labelledby="headingTwo"
+                                    data-parent="#accordionSuperDogEvents">
+                                    <div class="card-body">
+                                        <h5>Get Events</h5>
+                                        <p class="mb-3">
+                                            This function is to get event information.
+                                        </p>
+                                        <p>
+                                            <span class="badge badge-info">Lines 4</span>
+                                            Get which city the user select.
+                                        </p>
+                                        <p>
+                                            <span class="badge badge-info">Line 5 (9-21)</span>
+                                            Display the header part for only the filtered city.
+                                        </p>
+
+                                        <!-- Start Code -->
+                                        <pre class="line-numbers"><code class="language-javascript">
+function getEvents(element) {
+    // getFiltering
+    let city = element.getAttribute("data-string");
+    getFiltering(city);
+    displayStats();
+}
+
+function getFiltering(city) {
+    curEvents = JSON.parse(localStorage.getItem("storageArray")) || eventsArray;
+    filteredEvents = curEvents;
+    document.getElementById("statsHeader").innerHTML = `Stats For ${city} Events`;
+    if (city != "All") {
+        //Explain how array filtering works-
+        filteredEvents = curEvents.filter(function (item) {
+            if (item.city == city) {
+                return item;
+            }
+        });
+    }
+}
+</code></pre>
+                                        <!-- End Code -->
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header" id="headingThree">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                            data-target="#collapseDisplayStats" aria-expanded="false"
+                                            aria-controls="collapseDisplayStats">
+                                            Display Statistics
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseDisplayStats" class="collapse" aria-labelledby="headingThree"
+                                    data-parent="#accordionSuperDogEvents">
+                                    <div class="card-body">
+                                        <h5>Display Statistics</h5>
+                                        <p class="mb-3">
+                                            This function is to display statistics.
+                                        </p>
+
+
+                                        <!-- Start Code -->
+                                        <pre class="line-numbers"><code class="language-javascript">
+function displayStats() {
+    let total = 0;
+    let average = 0;
+    let most = 0;
+    let least = -1;
+    let currentAttendence = 0;
+
+    for (let i = 0; i < filteredEvents.length; i++) {
+        currentAttendance = parseInt(filteredEvents[i].attendance);
+        total += currentAttendance;
+
+        if (most < currentAttendance) {
+            most = currentAttendance;
+        }
+
+        if (least > currentAttendance || least < 0) {
+            least = currentAttendance;
+        }
+    }
+
+    average = total / filteredEvents.length;
+    document.getElementById("total").innerHTML = total.toLocaleString();
+    document.getElementById("most").innerHTML = most.toLocaleString();
+    document.getElementById("least").innerHTML = least.toLocaleString();
+    document.getElementById("average").innerHTML = average.toLocaleString(
+        undefined, {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }
+    );
+}
+
+                                            </code></pre>
+                                        <!-- End Code -->
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingFour">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                            data-target="#collapseDisplayData" aria-expanded="false"
+                                            aria-controls="collapseDisplayData">
+                                            Display Data
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseDisplayData" class="collapse" aria-labelledby="headingFour"
+                                    data-parent="#accordionSuperDogEvents">
+                                    <div class="card-body">
+                                        <h5>Display Data</h5>
+                                        <p class="mb-3">
+                                            This function is to display all the events.
+                                        </p>
+
+                                        <!-- Start Code -->
+                                        <pre class="line-numbers"><code class="language-javascript">
+function displayData() {
+    const template = document.getElementById("Data-Template");
+    const resultsBody = document.getElementById("resultsBody");
+    // Clear table first
+    resultsBody.innerHTML = "";
+    curEvents = JSON.parse(localStorage.getItem("storageArray")) || [];
 
     if (curEvents.length == 0) {
         curEvents = eventsArray;
         localStorage.setItem("storageArray", JSON.stringify(curEvents));
     }
 
-    return curEvents;
+    // same as importNode (can be outside this html)
+
+    for (let i = 0; i < curEvents.length; i++) {
+        const dataRow = document.importNode(template.content, true);
+
+        dataRow.getElementById("event").textContent = curEvents[i].event;
+        dataRow.getElementById("city").textContent = curEvents[i].city;
+        dataRow.getElementById("state").textContent = curEvents[i].state;
+        dataRow.getElementById("attendance").textContent = curEvents[i].attendance;
+        dataRow.getElementById("eventDate").textContent = curEvents[i].eventDate;
+        //dataRow.getElementById("eventDate").textContent = formatPhoneNumber(curEvents[i].eventDate);
+
+        // Add the row to the page
+        resultsBody.appendChild(dataRow);
+    }
 }
-                            </code>
-                        </pre>
+                                            </code></pre>
+                                        <!-- End Code -->
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingFive">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                            data-target="#collapseSaveEvent" aria-expanded="false"
+                                            aria-controls="collapseSaveEvent">
+                                            Save Event Data
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseSaveEvent" class="collapse" aria-labelledby="headingFive"
+                                    data-parent="#accordionSuperDogEvents">
+                                    <div class="card-body">
+                                        <h5>Save Event Data</h5>
+                                        <p class="mb-3">
+                                            This function is to save an event that the user entered.
+                                        </p>
+                                        <p>
+                                            <span class="badge badge-info">Lines 25-26</span>
+                                            Refresh dropdown list and statistics.
+                                        </p>
+
+                                        <!-- Start Code -->
+                                        <pre class="line-numbers"><code class="language-javascript">
+function saveEvent() {
+    // Save Local Storage
+    let curEvents = JSON.parse(localStorage.getItem("storageArray")) || eventsArray;
+
+    let obj = {};
+    obj["event"] = document.getElementById("newEvent").value;
+    obj["city"] = document.getElementById("newCity").value;
+    obj["state"] = document.getElementById("newState").value;
+    obj["attendance"] = document.getElementById("newAttendance").value;
+    // let eventDate = document.getElementById("newEventDate").value;
+    // let eventDate2 = `${eventDate} 00:00`;
+    // obj["eventDate"] = new Date(eventDate2).toLocaleDateString();
+    obj["eventDate"] = formatDate(document.getElementById("newEventDate").value);
+
+    curEvents.push(obj);
+
+    localStorage.setItem("storageArray", JSON.stringify(curEvents));
+    if (obj["city"] == "") {
+        city = "All";
+    } else {
+        city = obj["city"];
+    }
+
+    getFiltering(city);
+    buildDropDown();
+}
+                                            </code></pre>
+                                        <!-- End Code -->
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
+
+
+
             </div>
 
         </div>
