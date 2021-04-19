@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>SuperDog Events - A Coding Challenge</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicons -->
+    <link href="/img/superdog.png" rel="icon">
+    <link href="/img/favicon_apple_touch_trans.png" rel="apple-touch-icon">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism-twilight.min.css"
+        integrity="sha512-akb4nfKzpmhujLUyollw5waBPeohuVf0Z5+cL+4Ngc4Db+V8szzx6ZTujguFjpmD076W8LImVIbOblmQ+vZMKA=="
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/superdog.css">
+</head>
+
+<body>
+    <header>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+            <div class="container">
+
+                <a class="navbar-brand" href="index.html">
+                    <img src="/img/Superdog_Sm_trans.png" width="50"> SuperDog Events</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="app.html">The App</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="code.html">See The Code</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://github.com/Young-Jung/SuperDogEvents" target="_blank">Get
+                                The
+                                Code</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://youngjung.netlify.app/" target="_blank">About</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main role="main" class="container">
+        <div class="container-fluid">
+            <div class="dogContainer">
+                <div class="row">
+                    <div class="col">
+                        <h1 style="margin-top: 30px;">Super Dog Events: A Coding Challenge</h1>
+                        <strong>The Functions that make Super Dog Events Super.</strong>
+                        <br><br>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-7 col-md-7 col-lg">
+
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 line-numbers">
+                        <pre><code class="language-javascript">
+// the default display is all events
+var filteredEvents = eventsArray;
+
+// build a dropdown of specific cities
+function buildDropDown() {
+    displayDropDown();
+    displayStats();
+    displayData();
+}
+
+function displayDropDown() {
+    var eventDD = document.getElementById("eventDropDown");
+    let curEvents = [];
+    curEvents = getData();
+    let distinctEvents = [...new Set(curEvents.map((ev) => ev.city))];
+
+    let linkHTMLEnd =
+        '<div class="dropdown-divider"></div><a class="dropdown-item" onclick="getEvents(this)" data-string="All" >All</a>';
+    let resultHTML = "";
+
+    for (let i = 0; i < distinctEvents.length; i++) {
+        resultHTML += `<a class="dropdown-item" onclick="getEvents(this)" data-string="${distinctEvents[i]}">${distinctEvents[i]}</a>`;
+
+    }
+    resultHTML += linkHTMLEnd;
+    eventDD.innerHTML = resultHTML;
+}
+
+function getData() {
+    let curEvents = JSON.parse(localStorage.getItem("storageArray")) || [];
+
+    if (curEvents.length == 0) {
+        curEvents = eventsArray;
+        localStorage.setItem("storageArray", JSON.stringify(curEvents));
+    }
+
+    return curEvents;
+}
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6 text-muted">&copy; Young Jung 2021</div>
+                <div class="col-lg-9 col-md-6 col-sm-6 text-muted" style="font-size:0.7rem;text-align: right;">
+                    Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a>
+                    from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script src="/js/prismTomorrow.js"></script>
+</body>
+
+</html>
